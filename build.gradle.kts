@@ -29,8 +29,6 @@ configurations {
     }
 }
 
-extra["springCloudVersion"] = "2025.0.0"
-
 dependencies {
     implementation("org.springframework.boot:spring-boot-starter-actuator")
     implementation("org.springframework.boot:spring-boot-starter-data-jpa")
@@ -65,7 +63,8 @@ dependencies {
 
 dependencyManagement {
     imports {
-        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("springCloudVersion")}")
+        mavenBom(
+            "org.springframework.cloud:spring-cloud-dependencies:${findProperty("org.springframework.cloud.version")}")
     }
 }
 
