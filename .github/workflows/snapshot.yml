@@ -1,0 +1,23 @@
+on:
+  pull_request:
+    paths-ignore:
+      - .idea/
+      - .editorconfig
+      - .gitattributes
+      - .gitignore
+      - LICENSE*
+      - README*
+  push:
+    paths-ignore:
+      - .idea/
+      - .editorconfig
+      - .gitattributes
+      - .gitignore
+      - LICENSE*
+      - README*
+jobs:
+  deploy:
+    uses: sogeor/workflows/.github/workflows/snapshot.yml@master
+    secrets: inherit
+    with:
+      DOCKER_IMAGE_NAME: ${{ vars.DOCKER_IMAGE_NAME }}
