@@ -43,18 +43,19 @@ dependencies {
 
     compileOnly("org.jetbrains:annotations:${findProperty("org.jetbrains.annotations.version")}")
     implementation("io.micrometer:micrometer-registry-prometheus")
-    implementation("org.springdoc:springdoc-openapi-starter-webmvc-ui:${
-        findProperty("org.springdoc.springdoc-openapi-starter-webmvc-ui.version")
+    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:${
+        findProperty("org.springdoc.springdoc-openapi-starter-webflux-ui.version")
     }")
 
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
-    annotationProcessor(
-        "org.projectlombok:lombok-mapstruct-binding:${findProperty("org.projectlombok.lombok-mapstruct-binding")}")
+    annotationProcessor("org.projectlombok:lombok-mapstruct-binding:${
+        findProperty("org.projectlombok.lombok-mapstruct-binding.version")
+    }")
 
-    implementation("com.zaxxer:HikariCP:${findProperty("com.zaxxer.HikariCP")}")
-    implementation("org.mapstruct:mapstruct:${findProperty("org.mapstruct.mapstruct")}")
-    annotationProcessor("org.mapstruct:mapstruct-processor:${findProperty("org.mapstruct.mapstruct")}")
+    implementation("com.zaxxer:HikariCP:${findProperty("com.zaxxer.HikariCP.version")}")
+    implementation("org.mapstruct:mapstruct:${findProperty("org.mapstruct.mapstruct.version")}")
+    annotationProcessor("org.mapstruct:mapstruct-processor:${findProperty("org.mapstruct.mapstruct.version")}")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     runtimeOnly("org.postgresql:r2dbc-postgresql")
