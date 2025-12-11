@@ -41,21 +41,21 @@ dependencies {
     testImplementation("io.projectreactor:reactor-test")
     testImplementation("org.springframework.kafka:spring-kafka-test")
 
-    compileOnly("org.jetbrains:annotations:${findProperty("org.jetbrains.annotations.version")}")
+    compileOnly("org.jetbrains:annotations:${property("o.jetbrains.annotations")}")
     implementation("io.micrometer:micrometer-registry-prometheus")
-    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:${
-        findProperty("org.springdoc.springdoc-openapi-starter-webflux-ui.version")
+    implementation("org.springdoc:springdoc-openapi-starter-webflux-api:${
+        property("o.springdoc.springdoc-openapi-starter-webflux-api")
     }")
 
     compileOnly("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok")
     annotationProcessor("org.projectlombok:lombok-mapstruct-binding:${
-        findProperty("org.projectlombok.lombok-mapstruct-binding.version")
+        property("o.projectlombok.lombok-mapstruct-binding")
     }")
 
-    implementation("com.zaxxer:HikariCP:${findProperty("com.zaxxer.HikariCP.version")}")
-    implementation("org.mapstruct:mapstruct:${findProperty("org.mapstruct.mapstruct.version")}")
-    annotationProcessor("org.mapstruct:mapstruct-processor:${findProperty("org.mapstruct.mapstruct.version")}")
+    implementation("com.zaxxer:HikariCP:${property("c.zaxxer.HikariCP")}")
+    implementation("org.mapstruct:mapstruct:${property("o.mapstruct.mapstruct")}")
+    annotationProcessor("org.mapstruct:mapstruct-processor:${property("o.mapstruct.mapstruct")}")
 
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     runtimeOnly("org.postgresql:r2dbc-postgresql")
@@ -64,8 +64,7 @@ dependencies {
 
 dependencyManagement {
     imports {
-        mavenBom(
-            "org.springframework.cloud:spring-cloud-dependencies:${findProperty("org.springframework.cloud.version")}")
+        mavenBom("org.springframework.cloud:spring-cloud-dependencies:${property("o.s.cloud")}")
     }
 }
 
