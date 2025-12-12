@@ -30,3 +30,7 @@
 | MONGODB_DATABASE                | Имя базы данных MongoDB.                                                   | inventory             |
 | KAFKA_BOOTSTRAP_SERVERS         | Список URL для подключения к Apache Kafka.                                 |                       |
 | KAFKA_CONSUMER_GROUP            | Имя группы потребителей в Apache Kafka.                                    | inventory-service     |
+| KC_ISSUER_URI                   | Ссылка на Keycloak область.                                                |                       |
+| KC_USERNAME_ATTRIBUTE           | Имя атрибута Keycloak для идентификации пользователей.                     | sub                   |
+| KC_CLIENT_ID                    | Идентификатор клиента Keycloak.                                            |                       |
+| KC_CLIENT_SECRET                | Секрет клиента Keycloak.                                                   |                       |
