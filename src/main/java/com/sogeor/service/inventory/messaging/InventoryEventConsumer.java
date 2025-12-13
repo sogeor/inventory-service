@@ -25,8 +25,8 @@ public class InventoryEventConsumer {
         try {
             InventoryEvents.ProductUpdatedEvent event = objectMapper.readValue(message,
                                                                                InventoryEvents.ProductUpdatedEvent.class);
-            log.info("Received Product Update for: {}", event.getId());
-            inventoryService.addStock(UUID.fromString(event.getId()), 0).subscribe();
+            log.info("Received Product Update for: {}", event.getProductId());
+            inventoryService.addStock(UUID.fromString(event.getProductId()), 0).subscribe();
         } catch (JsonProcessingException e) {
             log.error("Error processing product update", e);
         }

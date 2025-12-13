@@ -52,13 +52,17 @@ public class InventoryEvents {
     @AllArgsConstructor
     public static class ProductUpdatedEvent {
 
-        private String id;
+        private String eventType;
+
+        private String productId;
 
         private String name;
 
-        private String description;
-
         private Double price;
+
+        private String category;
+
+        private Instant timestamp;
 
     }
 
