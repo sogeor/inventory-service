@@ -13,7 +13,6 @@ import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
 import java.time.Instant;
-import java.util.UUID;
 
 @Slf4j
 @Service
@@ -24,14 +23,14 @@ public class InventoryService {
 
     private final InventoryEventProducer eventProducer;
 
-    public Mono<@NotNull Inventory> getInventory(UUID productId) {
+    public Mono<@NotNull Inventory> getInventory(String productId) {
         return inventoryRepository.findByProductId(productId)
                                   .switchIfEmpty(Mono.error(
                                           new RuntimeException("Inventory not found for product: " + productId)));
     }
 
     @Transactional
-    public Mono<@NotNull Inventory> addStock(UUID productId, Integer quantity) {
+    public Mono<@NotNull Inventory> addStock(String productId, Integer quantity) {
         return inventoryRepository.findByProductId(productId)
                                   .defaultIfEmpty(
                                           Inventory.builder().productId(productId).quantity(0).reserved(0).build())
@@ -43,7 +42,7 @@ public class InventoryService {
     }
 
     @Transactional
-    public Mono<@NotNull Inventory> reserveStock(UUID productId, Integer quantity) {
+    public Mono<@NotNull Inventory> reserveStock(String productId, Integer quantity) {
         return inventoryRepository.findByProductId(productId)
                                   .switchIfEmpty(Mono.error(
                                           new RuntimeException("Inventory not found for product: " + productId)))
@@ -59,7 +58,7 @@ public class InventoryService {
     }
 
     @Transactional
-    public Mono<@NotNull Inventory> releaseStock(UUID productId, Integer quantity) {
+    public Mono<@NotNull Inventory> releaseStock(String productId, Integer quantity) {
         return inventoryRepository.findByProductId(productId)
                                   .switchIfEmpty(Mono.error(
                                           new RuntimeException("Inventory not found for product: " + productId)))
@@ -75,7 +74,7 @@ public class InventoryService {
     }
 
     @Transactional
-    public Mono<@NotNull Inventory> deductStock(UUID productId, Integer quantity) {
+    public Mono<@NotNull Inventory> deductStock(String productId, Integer quantity) {
         return inventoryRepository.findByProductId(productId)
                                   .switchIfEmpty(Mono.error(
                                           new RuntimeException("Inventory not found for product: " + productId)))
@@ -105,8 +104,7 @@ public class InventoryService {
         if (inventory.getQuantity() < threshold) {
             eventProducer.sendLowStockAlert(InventoryEvents.LowStockAlertEvent.builder()
                                                                               .eventType("LOW_STOCK")
-                                                                              .productId(inventory.getProductId()
-                                                                                                  .toString())
+                                                                              .productId(inventory.getProductId())
                                                                               .quantity(inventory.getQuantity())
                                                                               .threshold(threshold)
                                                                               .timestamp(Instant.now())
@@ -118,8 +116,7 @@ public class InventoryService {
     private void sendUpdateEvent(Inventory inventory) {
         eventProducer.sendInventoryUpdated(InventoryEvents.InventoryUpdatedEvent.builder()
                                                                                 .eventType("INVENTORY_UPDATED")
-                                                                                .productId(inventory.getProductId()
-                                                                                                    .toString())
+                                                                                .productId(inventory.getProductId())
                                                                                 .quantity(inventory.getQuantity())
                                                                                 .reserved(inventory.getReserved())
                                                                                 .timestamp(Instant.now())

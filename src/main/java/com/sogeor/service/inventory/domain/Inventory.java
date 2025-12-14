@@ -10,7 +10,6 @@ import org.springframework.data.annotation.LastModifiedDate;
 import org.springframework.data.relational.core.mapping.Table;
 
 import java.time.Instant;
-import java.util.UUID;
 
 @Data
 @Builder
@@ -22,7 +21,7 @@ public class Inventory {
     @Id
     private Integer id;
 
-    private UUID productId;
+    private String productId;
 
     private Integer quantity;
 

@@ -5,8 +5,6 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
-import java.util.UUID;
-
 public class InventoryDto {
 
     @Data
@@ -15,7 +13,7 @@ public class InventoryDto {
     @AllArgsConstructor
     public static class InventoryResponse {
 
-        private UUID productId;
+        private String productId;
 
         private Integer quantity;
 

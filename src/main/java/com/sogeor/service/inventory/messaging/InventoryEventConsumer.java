@@ -26,7 +26,7 @@ public class InventoryEventConsumer {
             InventoryEvents.ProductUpdatedEvent event = objectMapper.readValue(message,
                                                                                InventoryEvents.ProductUpdatedEvent.class);
             log.info("Received Product Update for: {}", event.getProductId());
-            inventoryService.addStock(UUID.fromString(event.getProductId()), 0).subscribe();
+            inventoryService.addStock(event.getProductId(), 0).subscribe();
         } catch (JsonProcessingException e) {
             log.error("Error processing product update", e);
         }
@@ -40,7 +40,7 @@ public class InventoryEventConsumer {
             if ("ORDER_PAID".equals(event.getEventType())) {
                 log.info("Processing ORDER_PAID for order: {}", event.getOrderId());
                 event.getItems()
-                     .forEach(item -> inventoryService.deductStock(UUID.fromString(item.getProductId()),
+                     .forEach(item -> inventoryService.deductStock(item.getProductId(),
                                                                    item.getQuantity())
                                                       .subscribe(result -> log.debug("Stock deducted for product {}",
                                                                                      item.getProductId()),
@@ -51,7 +51,7 @@ public class InventoryEventConsumer {
                 log.info("Processing ORDER_CANCELLED for order: {}", event.getOrderId());
                 event.getItems()
                      .forEach(
-                             item -> inventoryService.addStock(UUID.fromString(item.getProductId()), item.getQuantity())
+                             item -> inventoryService.addStock(item.getProductId(), item.getQuantity())
                                                      .subscribe(result -> log.debug("Stock returned for product {}",
                                                                                     item.getProductId()),
                                                                 error -> log.error(

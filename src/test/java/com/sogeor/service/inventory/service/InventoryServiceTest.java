@@ -31,7 +31,7 @@ class InventoryServiceTest {
 
     @Test
     void addStock_shouldCreateNewInventory_whenProductDoesNotExist() {
-        UUID productId = UUID.randomUUID();
+        String productId = UUID.randomUUID().toString();
         Inventory newInventory = Inventory.builder().productId(productId).quantity(10).reserved(0).build();
 
         when(inventoryRepository.findByProductId(productId)).thenReturn(Mono.empty());
@@ -46,7 +46,7 @@ class InventoryServiceTest {
 
     @Test
     void addStock_shouldUpdateExistingInventory_whenProductExists() {
-        UUID productId = UUID.randomUUID();
+        String productId = UUID.randomUUID().toString();
         Inventory existingInventory = Inventory.builder().productId(productId).quantity(5).reserved(0).build();
 
         Inventory updatedInventory = Inventory.builder().productId(productId).quantity(15).reserved(0).build();
@@ -63,7 +63,7 @@ class InventoryServiceTest {
 
     @Test
     void reserveStock_shouldReserve_whenSufficientStock() {
-        UUID productId = UUID.randomUUID();
+        String productId = UUID.randomUUID().toString();
         Inventory existingInventory = Inventory.builder().productId(productId).quantity(10).reserved(0).build();
 
         Inventory reservedInventory = Inventory.builder().productId(productId).quantity(10).reserved(5).build();
@@ -78,7 +78,7 @@ class InventoryServiceTest {
 
     @Test
     void reserveStock_shouldError_whenInsufficientStock() {
-        UUID productId = UUID.randomUUID();
+        String productId = UUID.randomUUID().toString();
         Inventory existingInventory = Inventory.builder().productId(productId).quantity(10).reserved(8).build();
 
         when(inventoryRepository.findByProductId(productId)).thenReturn(Mono.just(existingInventory));

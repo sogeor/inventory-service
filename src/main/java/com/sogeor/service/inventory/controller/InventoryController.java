@@ -15,8 +15,6 @@ import org.springframework.web.bind.annotation.RestController;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.UUID;
-
 @RestController
 @RequiredArgsConstructor
 public class InventoryController {
@@ -25,7 +23,7 @@ public class InventoryController {
 
     @GetMapping("/{productId}")
     public Mono<@NotNull ResponseEntity<InventoryDto.@NotNull InventoryResponse>> getInventory(
-            @PathVariable UUID productId) {
+            @PathVariable String productId) {
         return inventoryService.getInventory(productId)
                                .map(inv -> ResponseEntity.ok(InventoryDto.InventoryResponse.builder()
                                                                                            .productId(
@@ -36,8 +34,8 @@ public class InventoryController {
     }
 
     @PostMapping("/{productId}/add")
-    public Mono<@NotNull ResponseEntity<InventoryDto.@NotNull InventoryResponse>> addStock(@PathVariable UUID productId,
-                                                                                           @RequestBody InventoryDto.StockUpdateRequest request) {
+    public Mono<@NotNull ResponseEntity<InventoryDto.@NotNull InventoryResponse>> addStock(
+            @PathVariable String productId, @RequestBody InventoryDto.StockUpdateRequest request) {
         return inventoryService.addStock(productId, request.getQuantity())
                                .map(inv -> ResponseEntity.ok(InventoryDto.InventoryResponse.builder()
                                                                                            .productId(
@@ -49,7 +47,7 @@ public class InventoryController {
 
     @PutMapping("/{productId}/reserve")
     public Mono<@NotNull ResponseEntity<InventoryDto.@NotNull InventoryResponse>> reserveStock(
-            @PathVariable UUID productId, @RequestBody InventoryDto.StockUpdateRequest request) {
+            @PathVariable String productId, @RequestBody InventoryDto.StockUpdateRequest request) {
         return inventoryService.reserveStock(productId, request.getQuantity())
                                .map(inv -> ResponseEntity.ok(InventoryDto.InventoryResponse.builder()
                                                                                            .productId(
@@ -61,7 +59,7 @@ public class InventoryController {
 
     @PutMapping("/{productId}/release")
     public Mono<@NotNull ResponseEntity<InventoryDto.@NotNull InventoryResponse>> releaseStock(
-            @PathVariable UUID productId, @RequestBody InventoryDto.StockUpdateRequest request) {
+            @PathVariable String productId, @RequestBody InventoryDto.StockUpdateRequest request) {
         return inventoryService.releaseStock(productId, request.getQuantity())
                                .map(inv -> ResponseEntity.ok(InventoryDto.InventoryResponse.builder()
                                                                                            .productId(
