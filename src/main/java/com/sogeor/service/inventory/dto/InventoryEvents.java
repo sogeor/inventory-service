@@ -5,6 +5,7 @@ import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.math.BigDecimal;
 import java.time.Instant;
 import java.util.List;
 
@@ -58,7 +59,7 @@ public class InventoryEvents {
 
         private String name;
 
-        private Double price;
+        private BigDecimal price;
 
         private String category;
 
